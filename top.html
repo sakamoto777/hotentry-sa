@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-568420-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-568420-12');
+</script>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>ホッテントリ感情分析</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="はてなブックマークのホッテントリ内の各エントリーについた全てのブクマコメントを解析して、感情的なネガティブ度・ポジティブ度を算出して表示しています。">
+<meta name="keywords" content="はてブ,ホッテントリ,感情分析">
+<link rel="stylesheet" href="css/style_blue.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/mystyle.css">
+<link rel="stylesheet" href="css/slide.css">
+<script type="text/javascript" src="js/openclose.js"></script>
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.12';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div id="container">
+
+<header>
+<h1 id="logo"><a href=""><img src="images/logo_top.png" alt="ホッテントリ感情分析"></a></h1>
+</header>
+
+<nav id="menubar">
+<ul>
+<li><a href="/yami">闇ホッテントリ</a></li>
+<li><a href="/kirei">きれいなホッテントリ</a></li>
+<li><a href="/yure">揺れホッテントリ</a></li>
+</ul>
+</nav>
+
+<div id="contents">
+
+
+<div class="title_black"><a href="/yami">闇ホッテントリ（ネガティブ度の高い順）</a></div>
+
+{% for entry in yami_entries %}
+  <div class="score_black"><strong>{{ entry.score }}％</strong></div>
+  <div class="entry"><strong><a href="{{ entry.entry_url }}" target="_blank">{{ entry.entry_title }}</a></strong></div>
+  <span class="users"><strong><a href="{{ entry.bukuma_url }}" target="_blank">{{ entry.bukuma_count }} users</a></strong></span>&nbsp;&nbsp;
+  <span class="other">揺れ幅：{{ entry.magnitude }}</span>
+  <div class="hr"><hr></div>
+{% endfor %}
+<div class="more"><a href="/yami">もっと見る</a></div>
+
+<div class="title_yellow"><a href="/kirei">きれいなホッテントリ（ポジティブ度の高い順）</a></div>
+
+{% for entry in kirei_entries %}
+  <div class="score_yellow"><strong>{{ entry.score }}％</strong></div>
+  <div class="entry"><strong><a href="{{ entry.entry_url }}" target="_blank">{{ entry.entry_title }}</a></strong></div>
+  <span class="users"><strong><a href="{{ entry.bukuma_url }}" target="_blank">{{ entry.bukuma_count }} users</a></strong></span>&nbsp;&nbsp;
+  <span class="other">揺れ幅：{{ entry.magnitude }}</span>
+  <div class="hr"><hr></div>
+{% endfor %}
+<div class="more"><a href="/kirei">もっと見る</a></div>
+
+<div class="title_red"><a href="/yure">揺れホッテントリ（揺れ幅の大きい順）</a></div>
+
+{% for entry in yure_entries %}
+  <div class="score_red"><strong>{{ entry.magnitude }}</strong></div>
+  <div class="entry"><strong><a href="{{ entry.entry_url }}" target="_blank">{{ entry.entry_title }}</a></strong></div>
+  <span class="users"><strong><a href="{{ entry.bukuma_url }}" target="_blank">{{ entry.bukuma_count }} users</a></strong></span>&nbsp;&nbsp;
+  <span class="other">ネガポジ度：{{ entry.score }}％</span>
+  <div class="hr"><hr></div>
+{% endfor %}
+<div class="more"><a href="/yure">もっと見る</a></div>
+
+<h2>このサイトについて</h2>
+<h3>このサイトは何？</h3>
+<a href="http://b.hatena.ne.jp/hotentry/all" target="_blank">はてなブックマークのホッテントリ</a>内の各エントリーについた全てのブクマコメントを解析して、感情的なネガティブ度・ポジティブ度を算出して表示しています。<br>
+次の３種類の分析結果が表示できます。<br>
+<ol>
+<li><a href="/yami">闇ホッテントリ</a>⇒ネガティブなコメントの多いエントリを順に表示します。</li>
+<li><a href="/kirei">きれいなホッテントリ</a>⇒ポジティブなコメントの多いエントリを順に表示します。</li>
+<li><a href="/yure">揺れホッテントリ</a>⇒ネガティブとポジティブの間の揺れ幅が大きい、つまり賛否両論の激しいエントリを順に表示します。</li>
+</ol>
+<h3>どうやってコメント解析しているの？</h3>
+サイトのソースコードは<a href="https://github.com/sakamoto777/hotentry-sa" target="_blank">こちら</a>。<br>
+<a href="http://developer.hatena.ne.jp/ja/documents/bookmark/apis/getinfo" target="_blank">はてなブックマークエントリー情報取得API</a>を使用してコメントを取得し、<a href="https://cloud.google.com/natural-language/" target="_blank">Google Cloud Natural Language API</a>を使用して解析しています。<br><br>
+<h3>誰がどうやって作ったの？</h3>
+さかもとが個人の趣味で作りました。<br>
+あとで開発記録や、ソースコードの解説記事を公開しようと思っていますので、興味のある方は僕のブログやツイッターの購読・フォローをお願いいたします。⇒
+<a href="http://sakamoto2.hateblo.jp/" target="_blank">さかもとのブログ</a>/
+<a href="https://twitter.com/sakamoto_777" target="_blank">さかもとのツイッター</a>
+
+<ul class="sns-share-buttons">
+
+<li><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-large" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script></li>
+
+<li><div class="fb-share-button" data-href="https://hotentry-sa.appspot.com/" data-layout="box_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fhotentry-sa.appspot.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div></li>
+
+<li><a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="ホッテントリ感情分析" data-url="https://hotentry-sa.appspot.com/" data-lang="ja" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li>
+
+</ul>
+
+</div>
+<!--/contents-->
+
+<footer>
+<small>Copyright&copy; <a href="">ホッテントリ感情分析</a> All Rights Reserved.</small>
+<span class="pr">《<a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a>》</span>
+</footer>
+
+</div>
+<!--/container-->
+
+<!--スマホ用更新情報　480px以下-->
+<script type="text/javascript">
+if (OCwindowWidth() <= 480) {
+	open_close("newinfo_hdr", "newinfo");
+}
+</script>
+
+</body>
+</html>

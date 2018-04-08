@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-568420-12"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-568420-12');
+</script>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>揺れホッテントリ - ホッテントリ感情分析</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="はてなブックマークのホッテントリ内の各エントリーについた全てのブクマコメントを解析して、賛否両論の激しいエントリを順に表示しています。">
+<meta name="keywords" content="はてブ,ホッテントリ,感情分析">
+<link rel="stylesheet" href="css/style_red.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/mystyle.css">
+<link rel="stylesheet" href="css/slide.css">
+<script type="text/javascript" src="js/openclose.js"></script>
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+<div id="container">
+
+<header>
+<h1 id="logo"><a href=""><img src="images/logo_yure.png" alt="揺れホッテントリ"></a></h1>
+</header>
+
+<nav id="menubar">
+<ul>
+<li><a href="../yami">闇ホッテントリ</a></li>
+<li><a href="../kirei">きれいなホッテントリ</a></li>
+<li><a href="../">トップページ</a></li>
+</ul>
+</nav>
+
+<div id="contents">
+
+
+<div class="title_red">揺れホッテントリ（揺れ幅の大きい順）</div>
+
+{% for entry in yure_entries %}
+  <div class="score_red"><strong>{{ entry.magnitude }}</strong></div>
+  <div class="entry"><strong><a href="{{ entry.entry_url }}" target="_blank">{{ entry.entry_title }}</a></strong></div>
+  <span class="users"><strong><a href="{{ entry.bukuma_url }}" target="_blank">{{ entry.bukuma_count }} users</a></strong></span>&nbsp;&nbsp;
+  <span class="other">ネガポジ度：{{ entry.score }}％</span>
+  <div class="hr"><hr></div>
+{% endfor %}
+
+
+</div>
+<!--/contents-->
+
+<footer>
+<small>Copyright&copy; <a href="">ホッテントリ感情分析</a> All Rights Reserved.</small>
+<span class="pr">《<a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a>》</span>
+</footer>
+
+</div>
+<!--/container-->
+
+<!--スマホ用更新情報　480px以下-->
+<script type="text/javascript">
+if (OCwindowWidth() <= 480) {
+	open_close("newinfo_hdr", "newinfo");
+}
+</script>
+
+</body>
+</html>

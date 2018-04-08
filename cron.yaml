@@ -1,0 +1,7 @@
+cron:
+- description: get_hotentry
+  url: /get_hotentry
+  schedule: every 150 minutes
+- description: check_score
+  url: /check_score
+  schedule: every 3 minutes

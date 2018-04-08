@@ -1,0 +1,68 @@
+@charset "utf-8";
+
+
+/*CSSスライドショー設定
+---------------------------------------------------------------------------*/
+/*１枚目*/
+@keyframes slide1 {
+	0% {opacity: 0;}
+	10% {opacity: 1;}
+	30% {opacity: 1;}
+	40% {opacity: 0;}
+	100% {opacity: 0;}
+}
+/*２枚目*/
+@keyframes slide2 {
+	0% {opacity: 0;}
+	30% {opacity: 0;}
+	40% {opacity: 1;}
+	60% {opacity: 1;}
+	70% {opacity: 0;}
+	100% {opacity: 0;}
+}
+/*３枚目*/
+@keyframes slide3 {
+	0% {opacity: 0;}
+	60% {opacity: 0;}
+	70% {opacity: 1;}
+	90% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+/*画像ブロック*/
+#mainimg {
+	clear: left;
+	width: 100%;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+/*３枚画像の共通設定*/
+#slide1,#slide2,#slide3 {
+	-webkit-animation-duration: 15s;	/*実行する時間。「s」は秒の事。*/
+	animation-duration: 15s;			/*同上*/
+	-webkit-animation-iteration-count:infinite;	/*実行する回数。「infinite」は無限に繰り返す意味。*/
+	animation-iteration-count:infinite;			/*同上*/
+	border-radius: 4px;	/*角丸のサイズ。大きくすれば角の丸みが大きくなる。角丸が不要ならこの１行削除。*/
+}
+
+/*１枚目*/
+#slide1 {
+	-webkit-animation-name: slide1;		/*上で設定しているキーフレーム（keyframes）の名前*/
+	animation-name: slide1;				/*同上*/
+	position: relative;width: 100%;height: auto;
+}
+
+/*２枚目*/
+#slide2 {
+	-webkit-animation-name: slide2;		/*上で設定しているキーフレーム（keyframes）の名前*/
+	animation-name: slide2;				/*同上*/
+	position: absolute;left:0px;top:0px;width: 100%;height: auto;
+}
+
+/*３枚目*/
+#slide3 {
+	-webkit-animation-name: slide3;		/*上で設定しているキーフレーム（keyframes）の名前*/
+	animation-name: slide3;				/*同上*/
+	position: absolute;left:0px;top:0px;width: 100%;height: auto;
+}
